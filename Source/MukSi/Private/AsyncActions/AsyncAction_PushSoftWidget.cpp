@@ -6,12 +6,13 @@
 #include "Subsystems/MuksiUISubsystem.h"
 #include "Widgets/Widget_ActivatableBase.h"
 
+#include "MuksiDebugHelper.h"
+
 UAsyncAction_PushSoftWidget* UAsyncAction_PushSoftWidget::PushSoftWidget(const UObject* WorldContextObject,
 	APlayerController* OwningPlayerController, TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass,
 	UPARAM(meta = (Categories = "Muksi.WidgetStack")) FGameplayTag InWidgetStackTag, bool bFocusOnNewlyPushedWidget)
 {
 	checkf(!InSoftWidgetClass.IsNull(), TEXT("PushSoftWidgetToStack was passed a null soft widget class"));
-	
 	if (GEngine)
 	{
 		if (UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull))
@@ -21,6 +22,7 @@ UAsyncAction_PushSoftWidget* UAsyncAction_PushSoftWidget::PushSoftWidget(const U
 			Node->CachedOwningPC = OwningPlayerController;
 			Node->CachedSoftWidgetClass = InSoftWidgetClass;
 			Node->bCachedFocusOnNewlyPushedWidget = bFocusOnNewlyPushedWidget;
+			Node->CachedWidgetStackTag = InWidgetStackTag;
 			
 			Node->RegisterWithGameInstance(World);
 			return Node;

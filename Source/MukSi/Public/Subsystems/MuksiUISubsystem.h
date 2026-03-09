@@ -10,12 +10,16 @@
 class UWidget_ActivatableBase;
 class UWidget_PrimaryLayout;
 struct FGameplayTag;
+class UMuksiCommonButtonBase;
+
 
 enum class EAsyncPushWidgetState : uint8
 {
 	OnCreatedBeforePush,
 	AfterPush
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnButtonDescriptionTextUpdatedDelegate, UMuksiCommonButtonBase*, BroadcastingButton, FText, DesciptionText);
 
 /**
  * 
@@ -36,6 +40,9 @@ public:
 	void RegisterCreatedPrimaryLayoutWidget(UWidget_PrimaryLayout* InCreatedWidget);
 	
 	void PushSoftWidgetToStackAynsc(const FGameplayTag& InWidgetStackTag, TSoftClassPtr<UWidget_ActivatableBase> InSoftWidgetClass, TFunction<void(EAsyncPushWidgetState, UWidget_ActivatableBase*)> AsyncPushStateCallback);
+	
+	UPROPERTY(BlueprintAssignable)
+	FOnButtonDescriptionTextUpdatedDelegate OnButtonDescriptionTextUpdate;
 	
 private:
 	UPROPERTY(Transient)

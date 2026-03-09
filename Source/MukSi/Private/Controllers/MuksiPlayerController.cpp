@@ -19,5 +19,4 @@ void AMuksiPlayerController::OnPossess(APawn* InPawn)
 		SetViewTarget(FoundCameras[0]);
 	}
 	
-	Debug::Print("Debug Print test");
 }
